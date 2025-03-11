@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать очки</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Редактировать очки</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Название:</label>
+                <input type="text" name="name" class="form-control" value="{{ eyewear.name }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Бренд:</label>
+                <input type="text" name="brand" class="form-control" value="{{ eyewear.brand }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Цена (₽):</label>
+                <input type="number" name="price" class="form-control" value="{{ eyewear.price }}" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Количество:</label>
+                <input type="number" name="quantity" class="form-control" value="{{ eyewear.quantity }}" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Материал оправы:</label>
+                <input type="text" name="frame_material" class="form-control" value="{{ eyewear.frame_material }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Материал линз:</label>
+                <input type="text" name="lens_material" class="form-control" value="{{ eyewear.lens_material }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Цвет:</label>
+                <input type="text" name="color" class="form-control" value="{{ eyewear.color }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Описание:</label>
+                <textarea name="description" class="form-control" rows="3" required>{{ eyewear.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Текущее изображение:</label><br>
+                {% if eyewear.image %}
+                    <img src="{{ eyewear.image.url }}" alt="Текущее изображение" class="img-thumbnail" style="max-width: 200px;">
+                {% else %}
+                    <p>Нет изображения</p>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Заменить изображение:</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <a href="/list/" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>
+

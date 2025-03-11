@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали очков</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>{{ glass.name }}</h1>
+        {% if glass.image %}
+            <img src="{{ glass.image.url }}" class="img-fluid" alt="{{ glass.name }}">
+        {% endif %}
+        <p><strong>Бренд:</strong> {{ glass.brand }}</p>
+        <p><strong>Цена:</strong> {{ glass.price }} ₽</p>
+        <p><strong>Материал оправы:</strong> {{ glass.frame_material }}</p>
+        <p><strong>Материал линз:</strong> {{ glass.lens_material }}</p>
+        <p><strong>Цвет:</strong> {{ glass.color }}</p>
+        <p>{{ glass.description }}</p>
+
+        <a href="{% url 'update' glass.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'delete' glass.id %}" class="btn btn-danger">Удалить</a>
+        <a href="/list/" class="btn btn-secondary">Назад к каталогу</a>
+    </div>
+</body>
+</html>
