@@ -43,8 +43,17 @@ class CreateView(View):
 class UpdateView(View):
     def get(self, request, pk):
         glass = get_object_or_404(Eyewear, id=pk)
-        form = EyewearForm(instance=glass)
-        return render(request, 'update.html', {'glass':glass, 'form':form})
+        form = EyewearForm(instace=glass)
+        return render(request, 'update.html', {'glass': glass, 'form': form})
+
+    def post(self, request, pk):
+        glass = get_object_or_404(Eyewear, id=pk)
+        form = EyewearForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list')
+        return render(request, 'update.html', {'glass': glass, 'form': form})
+
 
 class DetailView(View):
     def get(self, request, pk):
@@ -65,9 +74,10 @@ class DeleteView(View):
         return render(request, 'delete.html', {'glass':glass})
 
     def post(self, request, pk):
-        glass = get_object_or_404(Eyewear, id=pk)
-        glass.delete()
-        return redirect('glasses')
+        glass = Eyewear.objects.filter(id=pk)
+        if glass:
+            glass.delete()
+        return redirect('list')
 
 
 class SearchView(View):
@@ -93,18 +103,4 @@ class ContactView(View):
         return render(request, "contact.html", {'form': form})
 
 
-# class ProductList(LoginRequiredMixin, View):
-#     login_url = 'account:login'
-#     def get(self, request):
-#         t = request.GET.get('t')
-#         user = request.user
-#         if t:
-#             page_obj = Eyewear.objects.filter(Q(name__icontains=t) | Q(price__icontains=t))
-#         else:
-#             glasses = Eyewear.objects.all()
-#             paginator = Paginator(glasses, 2)
-#             page_number = request.GET.get("page")
-#             page_obj = paginator.get_page(page_number)
-#         return render(request, 'list.html', {'page_obj': page_obj, 'user': user})
 
-# Create your views here.
